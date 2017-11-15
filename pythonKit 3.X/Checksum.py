@@ -20,7 +20,7 @@ def generate_checksum(param_dict, merchant_key, salt=None):
 
     hash_string += salt
 
-    return __encode__(hash_string, IV, merchant_key)
+    return __encode__(hash_string, IV, merchant_key).decode()
 
 def generate_refund_checksum(param_dict, merchant_key, salt=None):
     for i in param_dict:    
@@ -36,7 +36,7 @@ def generate_refund_checksum(param_dict, merchant_key, salt=None):
 
     hash_string += salt
 
-    return __encode__(hash_string, IV, merchant_key)
+    return __encode__(hash_string, IV, merchant_key).decode()
 
 
 def generate_checksum_by_str(param_str, merchant_key, salt=None):
@@ -49,7 +49,7 @@ def generate_checksum_by_str(param_str, merchant_key, salt=None):
 
     hash_string += salt
 
-    return __encode__(hash_string, IV, merchant_key)
+    return __encode__(hash_string, IV, merchant_key).decode()
 
 
 def verify_checksum(param_dict, merchant_key, checksum):
@@ -82,7 +82,7 @@ def __id_generator__(size=6, chars=string.ascii_uppercase + string.digits + stri
 
 def __get_param_string__(params):
     params_string = []
-    for key in sorted(params.iterkeys()):
+    for key in sorted(params.keys()):
         value = params[key]
         params_string.append('' if value == 'null' else str(value))
     return '|'.join(params_string)
@@ -127,8 +127,8 @@ if __name__ == "__main__":
         "WEBSITE": "xxxxxxxxxxx"
     }
 
-    print verify_checksum(
+    print (verify_checksum(
         params, 'xxxxxxxxxxxxxxxx',
-        "CD5ndX8VVjlzjWbbYoAtKQIlvtXPypQYOg0Fi2AUYKXZA5XSHiRF0FDj7vQu66S8MHx9NaDZ/uYm3WBOWHf+sDQAmTyxqUipA7i1nILlxrk=")
+        "CD5ndX8VVjlzjWbbYoAtKQIlvtXPypQYOg0Fi2AUYKXZA5XSHiRF0FDj7vQu66S8MHx9NaDZ/uYm3WBOWHf+sDQAmTyxqUipA7i1nILlxrk="))
 
     # print generate_checksum(params, "xxxxxxxxxxxxxxxx")
